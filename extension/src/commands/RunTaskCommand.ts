@@ -3,7 +3,7 @@ import { runTask } from "../tasks/taskUtil";
 import { Command } from "./Command";
 import { RootProjectsStore } from "../stores";
 import { GradleClient } from "../client";
-import { checkDoubleClick } from "./utils";
+import { DoubleClickChecker } from "../util/DoubleClickChecker";
 
 export const COMMAND_RUN_TASK = "gradle.runTask";
 export const COMMAND_RUN_TASK_DOUBLE_CLICK = "gradle.runTaskDoubleClick";
@@ -25,12 +25,15 @@ export class RunTaskCommand extends Command {
 }
 
 export class RunTaskDoubleClickCommand extends Command {
+    private doubleClickChecker: DoubleClickChecker;
+
     constructor(private rootProjectsStore: RootProjectsStore, private client: GradleClient) {
         super();
+        this.doubleClickChecker = new DoubleClickChecker();
     }
 
     async run(treeItem: GradleTaskTreeItem): Promise<void> {
-        if (checkDoubleClick()) {
+        if (this.doubleClickChecker.checkDoubleClick(treeItem)) {
             return run(treeItem, this.rootProjectsStore, this.client);
         }
     }
