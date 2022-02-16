@@ -10,6 +10,7 @@ export interface GradleTaskDefinition extends vscode.TaskDefinition {
     buildFile: string;
     projectFolder: string;
     workspaceFolder: string;
+    debugEnabled: boolean;
     args: string;
     javaDebug: boolean;
 }

@@ -238,8 +238,9 @@ function createVSCodeTaskFromGradleTask(
         rootProject: gradleTask.getRootproject(),
         projectFolder: rootProject.getProjectUri().fsPath,
         workspaceFolder: rootProject.getWorkspaceFolder().uri.fsPath,
+        debugEnabled: gradleTask.getDebuggable(),
         args,
-        javaDebug: gradleTask.getDebuggable(),
+        javaDebug: false,
     };
     return createTaskFromDefinition(definition, rootProject, client);
 }
@@ -353,7 +354,7 @@ export function cloneTask(
     const definition: Required<GradleTaskDefinition> = {
         ...(task.definition as GradleTaskDefinition),
         args,
-        javaDebug,
+        javaDebug: javaDebug,
     };
     const rootProject = rootProjectsStore.get(definition.projectFolder);
     return createTaskFromDefinition(definition, rootProject!, client, useUniqueId);

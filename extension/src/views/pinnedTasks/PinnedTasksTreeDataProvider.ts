@@ -32,7 +32,7 @@ function buildTaskTreeItem(
         definition.description || taskName, // tooltip
         "", // description
         icons,
-        definition.javaDebug
+        definition.debugEnabled
     );
     pinnedTaskTreeItem.setContext();
     return pinnedTaskTreeItem;
